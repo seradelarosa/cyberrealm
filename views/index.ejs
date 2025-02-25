@@ -1,0 +1,27 @@
+<!-- Using EJS because it typically handles form submissions with backend processing -->
+<!-- JSX typically uses state management and event handlers -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CyberRealm</title>
+</head>
+<body>
+  <% if (user) { %>
+    <h1>Welcome to CyberRealm, <%= user.username %>!</h1>
+    <p>
+      <a href="/auth/sign-out">Sign out</a>
+      <a href="/bulletinboard">Enter the realm</a>
+
+    </p>
+  <% } else { %>
+    <h1>Welcome to CyberRealm.</h1>
+    <p>
+      <a href="/auth/sign-up">Sign up</a> or
+      <a href="/auth/sign-in">Sign in</a>.
+    </p>
+  <% } %>
+</body>
+</html>
