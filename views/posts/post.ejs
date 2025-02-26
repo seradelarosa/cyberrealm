@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Post Details</title>
+</head>
+<body>
+<!-- link back to the bulletin board -->
+<a href="/bulletinboard">Back to the Bulletin Board</a>
+
+  <h1>Post Details</h1>
+
+  <!-- display the post -->
+  <div class="post">
+    <h2><%= post.body %></h2>
+    <p><strong>Author:</strong> 
+        <a href="/profile/<%= post.author._id %>"><%= post.author.username %></a>
+      </p>      
+    <p><small><%= post.createdAt.toLocaleString() %></small></p>
+  </div>
+
+</body>
+</html>

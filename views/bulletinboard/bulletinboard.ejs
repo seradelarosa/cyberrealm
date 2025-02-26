@@ -10,7 +10,29 @@
     <h1>Welcome to CyberRealm, <%= user.username %>!</h1>
     <p>
       <a href="/auth/sign-out">Sign out</a>
+      <a href="/profile">Profile Page</a>
     </p>
+
+<!-- post form -->
+<form action="/posts" method="POST">
+    <label for="note">What's your vibe?</label>
+    <textarea name="note" id="note"></textarea>
+
+    <button type="submit">Send</button>
+</form>
+
+
+<!-- feed -->
+<div class="posts">
+    <% posts.forEach(post => { %>
+      <div class="post">
+        <a href="/posts/<%= post._id %>">
+            <p><strong><%= post.author.username %>:</strong> <%= post.body %></p>
+            <small><%= post.createdAt.toLocaleString() %></small>
+          </a>
+      </div>
+    <% }) %>
+  </div>
 
 
 </body>

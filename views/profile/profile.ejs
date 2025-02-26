@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CyberRealm</title>
+</head>
+
+<body>
+
+  <!-- if the logged-in user visits their own profile (/profile) they can view and edit it. -->
+  <!-- if the logged-in user visits someone else's profile (/profile/:userId) they can view but NOT edit it -->
+
+  <a href="/bulletinboard">Back to bulletin board</a>
+
+  <div class="profile-container">
+    <h1>
+      <%= user.username %>'s Profile
+    </h1>
+
+    <!-- Allow editing if this is your profile -->
+    <!-- If this is not your profile, show that you're just viewing their profile -->
+    <% if (isCurrentUser) { %>
+      <a href="/profile/edit">Edit Profile</a>
+    <% } else { %>
+        <p>Viewing <%= user.username %>'s profile</p>
+    <% } %>
+
+    <h2><%= isCurrentUser ? "Your Posts" : user.username + "'s Posts" %></h2>
+
+    <div class="posts">
+      <% if (posts.length > 0) { %>
+        <% posts.forEach(post => { %>
+          <div class="post">
+            <a href="/posts/<%= post._id %>">
+            <p><strong><%= user.username %>:</strong> <%= post.body %></p>
+            <small>Posted on <%= new Date(post.createdAt).toLocaleString() %></small>
+          </a>
+          </div>
+        <% }) %>
+      <% } else { %>
+        <p><%= isCurrentUser ? "You haven't posted anything yet." : user.username + " hasn't posted anything yet." %></p>
+      <% } %>
+    </div>
+
+  </div>
+
+</body>
+
+</html>
