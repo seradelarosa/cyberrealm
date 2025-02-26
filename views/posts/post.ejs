@@ -20,5 +20,23 @@
     <p><small><%= post.createdAt.toLocaleString() %></small></p>
   </div>
 
+  <!-- Reply Form -->
+  <h3>Add a Reply:</h3>
+  <form action="/post/<%= post._id %>/reply" method="POST">
+    <textarea name="body" placeholder="Write your reply here..." required></textarea>
+    <button type="submit">Reply</button>
+  </form>
+
+<!-- Display replies -->
+<h3>Replies:</h3>
+<div class="replies">
+  <% post.replies.forEach(reply => { %>
+    <div class="reply">
+      <p><strong><%= reply.author.username %>:</strong> <%= reply.body %></p>
+      <small><%= reply.createdAt.toLocaleString() %></small>
+    </div>
+  <% }) %>
+</div>
+
 </body>
 </html>

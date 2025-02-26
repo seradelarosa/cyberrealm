@@ -133,6 +133,32 @@ app.get('/posts/:id', async (req, res) => {
   }
 });
 
+app.post('/post/:postId/reply', async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.postId);
+
+    if (!post) {
+      return res.status(404).render('errors/404', { message: "Post not found" });
+    }
+
+    // Create the new reply
+    const newReply = {
+      body: req.body.body,
+      author: req.session.user._id
+    };
+
+    // Push the new reply to the post's replies array
+    post.replies.push(newReply);
+    await post.save();
+
+    // Redirect to the same post details page
+    res.redirect(`/posts/${post._id}`);
+
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Error adding reply!");
+  }
+});
 
 app.listen(port, () => {
   console.log(`The express app is ready on port ${port}!`);
