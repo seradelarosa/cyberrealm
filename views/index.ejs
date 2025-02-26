@@ -6,22 +6,35 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/styles/index.module.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap" rel="stylesheet">
   <title>CyberRealm</title>
 </head>
 <body>
   <% if (user) { %>
-    <h1>Welcome to CyberRealm, <%= user.username %>!</h1>
-    <p>
-      <a href="/auth/sign-out">Sign out</a>
-      <a href="/bulletinboard">Enter the realm</a>
-
-    </p>
+    <div class="card">
+    <h1 class="title">CyberRealm</h1>
+    <p class="subtitle">a secret cozy, dreamy digital hangout</p>
+    
+        <div class="button-container">
+            <a href="/auth/sign-up"><button class="button">Sign up</button></a>
+            <a href="/auth/sign-in"><button class="button">Sign in</button></a>
+          </div> 
+    
+</div>
   <% } else { %>
-    <h1>Welcome to CyberRealm.</h1>
-    <p>
-      <a href="/auth/sign-up">Sign up</a> or
-      <a href="/auth/sign-in">Sign in</a>.
-    </p>
+    <div class="card">
+    <h1 class="title">CyberRealm</h1>
+    <p class="subtitle">a secret cozy, dreamy digital hangout</p>
+    
+        <div class="button-container">
+            <a href="/auth/sign-up"><button class="button">sign up</button></a>
+            <a href="/auth/sign-in"><button class="button">sign in</button></a>
+          </div>          
+    
+</div>
   <% } %>
 </body>
 </html>
