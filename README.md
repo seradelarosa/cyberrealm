@@ -4,11 +4,10 @@ https://trello.com/b/cmI4fDuX/cyberrealm-crud-app
 
 Technical requirements
 
-MVP
-✅ Any items marked incomplete in this section will require you to use your one redo to re-submit them. Your app must fulfill the below requirements.
-
-The app utilizes EJS Templates for rendering views to users.
-The app uses session-based authentication.
+MVP Requirements | Status
+---| ---|
+The app utilizes EJS Templates for rendering views to users. |
+The app uses session-based authentication. |
 The app’s files are organized following the conventions taught in lectures.
 The app has at least one data entity in addition to the User model. At least one entity must have a relationship with the User model.
 The app has full CRUD functionality.
