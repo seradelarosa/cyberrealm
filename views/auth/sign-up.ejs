@@ -3,28 +3,23 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="/styles/signin.module.css">
+  <link rel="stylesheet" href="/styles/signup.module.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap" rel="stylesheet">
   
-  <title>Sign Up</title>
+  <title>sign Up</title>
 </head>
 <body>
   <div class="card">
-  <h1 class="title">Create a new account!</h1>
+  <h1 class="title">create a new account</h1>
   <form action="/auth/sign-up" method="POST">
-    <label for="username" class="subtitle">Username:</label>
+    <label for="username" class="otherfont">username:</label>
     <input type="text" name="username" id="username" required />
-    <label for="password" class="subtitle">Password:</label>
+    <label for="password" class="otherfont">password:</label>
     <input type="password" name="password" id="password" required />
-    <label for="confirmPassword" class="subtitle">Confirm Password:</label>
-    <input 
-      type="password"
-      name="confirmPassword"
-      id="confirmPassword"
-      required 
-    />
+    <label for="confirmPassword" class="otherfont">confirm password:</label>
+    <input type="password" name="confirmPassword" id="confirmPassword" required />
     <div class="button-container">
     <button type="submit" class="button">sign up</button>
   </div>
