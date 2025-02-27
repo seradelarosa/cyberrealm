@@ -3,16 +3,25 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/styles/signin.module.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap" rel="stylesheet">
+  
   <title>Sign In</title>
 </head>
 <body>
-  <h1>Sign in</h1>
+  <div class="card">
+  <h1 class="title">Sign in</h1>
   <form action="/auth/sign-in" method="POST">
     <label for="username">Username:</label>
     <input type="text" name="username" id="username" required />
     <label for="password">Password:</label>
     <input type="password" name="password" id="password" required />
-    <button type="submit">Sign in</button>
+    <div class="button-container">
+    <button type="submit" class="button">Sign in</button>
+  </div>
   </form>
+</div>
 </body>
 </html>
