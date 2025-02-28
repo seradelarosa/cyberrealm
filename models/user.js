@@ -15,6 +15,9 @@ const userSchema = mongoose.Schema({
   bio: {
     type: String,
   },
+  aboutMe: {
+    type: String,
+  },
   socials: {
     type: String,
   },
