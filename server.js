@@ -7,6 +7,10 @@ const methodOverride = require('method-override');
 const morgan = require('morgan');
 const session = require('express-session');
 
+// for profile photos
+const fileUpload = require('express-fileupload');
+const path = require('path');
+
 const User = require('./models/user'); // Make sure the path is correct
 const authController = require('./routes/auth.js');
 const Post = require('./models/post.js');
@@ -36,8 +40,15 @@ app.use(
   })
 );
 
-// link styles
+// Serve static css first
 app.use(express.static('public'));
+
+// middleware for file uploads
+app.use(fileUpload());
+
+// Serve static files for profile images
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
 
 // ==================================================================================================
 
@@ -238,6 +249,56 @@ app.put('/posts/:id', async (req, res) => {
     res.status(500).send("Error updating post!");
   }
 });
+
+// post a profile image
+// THANK YOU INTERNET
+app.post('/profile/upload', async (req, res) => {
+  if (!req.files || !req.files.profileImage) {
+    return res.status(400).send('No file uploaded.');
+  }
+
+  const profileImage = req.files.profileImage;
+  const uploadPath = path.join(__dirname, 'uploads', profileImage.name); // Save to uploads folder
+
+  // Move the uploaded file to the 'uploads' folder
+  profileImage.mv(uploadPath, async (err) => {
+    if (err) {
+      return res.status(500).send(err);
+    }
+
+    // Update the user's profile image in the database
+    try {
+      const user = await User.findById(req.session.user._id);
+      user.profileImage = `/uploads/${profileImage.name}`; // Store the relative path in DB
+      await user.save();
+
+      // Update session to reflect the profile image change
+      req.session.user.profileImage = user.profileImage;
+
+      // Redirect to the user's profile page
+      res.redirect(`/profile/${user._id}`);
+    } catch (error) {
+      console.error(error);
+      res.status(500).send("Error updating profile image.");
+    }
+  });
+});
+
+app.post('/profile', (req, res) => {
+  const userId = req.user.id;
+  const bio = req.body.bio;
+
+   // Update the user's bio in the database
+   User.findByIdAndUpdate(userId, { bio: bio }, { new: true }, (err, updatedUser) => {
+    if (err) {
+      return res.status(500).send("Error updating bio");
+    }
+    // Redirect to the profile page (or any other page)
+    res.redirect(`/profile/${updatedUser.id}`);
+  });
+});
+
+
 
 // ==================================================================================================
 

@@ -9,6 +9,18 @@ const userSchema = mongoose.Schema({
     type: String,
     required: true,
   },
+  profileImage: { 
+    type: String,
+  },
+  bio: {
+    type: String,
+  },
+  socials: {
+    type: String,
+  },
+  favArtists: {
+    type: String,
+  }
 });
 
 const User = mongoose.model('User', userSchema);

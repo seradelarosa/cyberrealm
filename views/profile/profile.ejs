@@ -4,6 +4,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/styles/profile.module.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap" rel="stylesheet">
+
   <title>CyberRealm</title>
 </head>
 
@@ -12,39 +17,136 @@
   <!-- if the logged-in user visits their own profile (/profile) they can view and edit it. -->
   <!-- if the logged-in user visits someone else's profile (/profile/:userId) they can view but NOT edit it -->
 
-  <a href="/bulletinboard">Back to bulletin board</a>
 
-  <div class="profile-container">
-    <h1>
-      <%= user.username %>'s Profile
-    </h1>
+  <!-- back button -->
+  <a href="/bulletinboard">
+    <svg xmlns="http://www.w3.org/2000/svg" width="33" height="34" viewBox="0 0 33 34" fill="none">
+      <rect width="33" height="34" />
+      <path d="M26.125 17H6.875M6.875 17L16.5 26.9167M6.875 17L16.5 7.08333" stroke="#265274" stroke-width="4"
+        stroke-linecap="round" stroke-linejoin="round" />
+    </svg>
+  </a>
 
-    <!-- Allow editing if this is your profile -->
-    <!-- If this is not your profile, show that you're just viewing their profile -->
-    <% if (isCurrentUser) { %>
-      <a href="/profile/edit">Edit Profile</a>
-    <% } else { %>
-        <p>Viewing <%= user.username %>'s profile</p>
-    <% } %>
+  <div class="header-container">
 
-    <h2><%= isCurrentUser ? "Your Posts" : user.username + "'s Posts" %></h2>
+  
+    <div class="profile-picture">
+      <!-- if no default image, show an empty div -->
+      <img src="<%= user.profileImage || '' %>" alt="Profile Picture">
+    </div> 
+    
+    <div class="stack">
+      <!-- only show edit icon if you are the user -->
+      
+        <div>
+        <form action="/profile/upload" method="POST" enctype="multipart/form-data"></form>
+      <label for="profileImage"></label>
+      <input type="file" name="profileImage" id="profileImage" accept="image/*" required>
+      <button type="submit">Upload</button>
+    </form> 
+  </div>
+        <a href="/profile/edit">
+          <svg class="edit-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+            fill="none">
+            <path
+              d="M5 19H6.425L16.2 9.225L14.775 7.8L5 17.575V19ZM3 21V16.75L16.2 3.575C16.4 3.39167 16.6208 3.25 16.8625 3.15C17.1042 3.05 17.3583 3 17.625 3C17.8917 3 18.15 3.05 18.4 3.15C18.65 3.25 18.8667 3.4 19.05 3.6L20.425 5C20.625 5.18333 20.7708 5.4 20.8625 5.65C20.9542 5.9 21 6.15 21 6.4C21 6.66667 20.9542 6.92083 20.8625 7.1625C20.7708 7.40417 20.625 7.625 20.425 7.825L7.25 21H3ZM15.475 8.525L14.775 7.8L16.2 9.225L15.475 8.525Z"
+              fill="#8693A4" />
+          </svg>
+        </a>
+        
 
-    <div class="posts">
-      <% if (posts.length > 0) { %>
-        <% posts.forEach(post => { %>
-          <div class="post">
-            <a href="/posts/<%= post._id %>">
-            <p><strong><%= user.username %>:</strong> <%= post.body %></p>
-            <small>Posted on <%= new Date(post.createdAt).toLocaleString() %></small>
-          </a>
-          </div>
-        <% }) %>
-      <% } else { %>
-        <p><%= isCurrentUser ? "You haven't posted anything yet." : user.username + " hasn't posted anything yet." %></p>
-      <% } %>
+          <!-- show username and bio to everyone -->
+          <h1 class="username">
+            @<%= user.username %>
+          </h1>
+          <div class="bio">
+            <textarea name="bio"><%= user.bio %></textarea>
+          </div>          
+    </div>
+  </div>
+
+  <!-- OTHER SECTIONS -->
+
+  <!-- more about @username -->
+  <div class="about-container">
+    <div class="about-content">
+      <h1 class="about-text">more about @<%= user.username %>
+      </h1>
+      <textarea class="about-textarea"></textarea>
+      <button>save</button>
+    </div>
+  </div>
+
+  <div class="containers-wrapper">
+    <!--socials -->
+    <div class="socials-container">
+      <h1 class="socials-label">other socials</h1>
+      <textarea class="socials-textarea" placeholder="add other socials here"></textarea>
+      <button>save</button>
+    </div>
+
+    <!-- artists -->
+    <div class="artists-container">
+      <h1 class="artists-label">other socials</h1>
+      <textarea class="artists-textarea" placeholder="add your favorite artists here!"></textarea>
+      <button>save</button>
     </div>
 
   </div>
+
+  <!-- Only allow new posts to be made if this is your profile -->
+  <% if (isCurrentUser) { %>
+    <div class="newpost-border">
+      <div class="newpost-inner-border">
+        <div class="newpost-text-box">
+          <textarea name="note" id="note" placeholder="what's ur vibe?"></textarea>
+        </div>
+        <button class="sendbtn" type="submit">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <g clip-path="url(#clip0_1_37)">
+              <path
+                d="M18.3333 1.66666L9.16666 10.8333M18.3333 1.66666L12.5 18.3333L9.16666 10.8333M18.3333 1.66666L1.66666 7.49999L9.16666 10.8333"
+                stroke="#8DC1DD" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </g>
+            <defs>
+              <clipPath id="clip0_1_37">
+                <rect width="20" height="20" fill="white" />
+              </clipPath>
+            </defs>
+          </svg>
+        </button>
+      </div>
+    </div>
+    <% } %>
+
+      <h3 class="title">
+        <%= isCurrentUser ? "Your Posts" : user.username + "'s Posts" %>
+      </h3>
+
+      <!-- show all posts authored by this user -->
+      <div class="post-container">
+        <% if (posts.length> 0) { %>
+          <% posts.forEach(post=> { %>
+            <div class="post">
+              <a href="/posts/<%= post._id %>">
+                <p><strong>
+                    <%= user.username %>:
+                  </strong>
+                  <%= post.body %>
+                </p>
+                <small>Posted on <%= new Date(post.createdAt).toLocaleString() %></small>
+              </a>
+            </div>
+            <% }) %>
+              <% } else { %>
+                <p>
+                  <%= isCurrentUser ? "You haven't posted anything yet." : user.username
+                    + " hasn't posted anything yet." %>
+                </p>
+                <% } %>
+      </div>
+
+      </div>
 
 </body>
 
