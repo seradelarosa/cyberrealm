@@ -284,19 +284,30 @@ app.post('/profile/upload', async (req, res) => {
   });
 });
 
-app.post('/profile', (req, res) => {
-  const userId = req.user.id;
+// Route for updating the user's bio
+app.post('/profile', async (req, res) => {
+  const userId = req.session.user._id;
   const bio = req.body.bio;
 
-   // Update the user's bio in the database
-   User.findByIdAndUpdate(userId, { bio: bio }, { new: true }, (err, updatedUser) => {
-    if (err) {
-      return res.status(500).send("Error updating bio");
-    }
-    // Redirect to the profile page (or any other page)
-    res.redirect(`/profile/${updatedUser.id}`);
-  });
+  try {
+    // Update the user's bio in the database
+    const updatedUser = await User.findByIdAndUpdate(
+      userId,
+      { bio: bio },
+      { new: true }
+    );
+
+    // Update session user data to reflect the change
+    req.session.user.bio = updatedUser.bio;
+
+    // Redirect to the updated profile page
+    res.redirect(`/profile/${updatedUser._id}`);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Error updating bio");
+  }
 });
+
 
 
 
