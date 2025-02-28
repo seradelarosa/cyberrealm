@@ -148,7 +148,8 @@ app.post('/posts', async (req, res) => {
 
     await newPost.save();
 
-    res.redirect('bulletinboard');
+    // Redirect back to the same page
+    res.redirect(req.get('Referer'));
   } catch (error) {
     console.log(error)
     res.status(500).send("Error creating post!");

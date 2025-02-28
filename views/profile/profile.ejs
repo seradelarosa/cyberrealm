@@ -64,8 +64,14 @@
         <% if (isCurrentUser) { %>
           <!-- If it's the current user, allow editing -->
           <form action="/profile" method="POST">
-            <textarea name="bio"><%= user.bio %></textarea>
-            <button type="submit">Save Bio</button>
+            <textarea name="bio" class="bio-textarea"><%= user.bio %></textarea>
+        
+            <button type="submit" class="save-btn-style">
+              <svg xmlns="http://www.w3.org/2000/svg" width="39" height="35" viewBox="0 0 39 35" fill="none">
+                <rect x="0.25" y="0.25" width="35" height="35" />
+                <path d="M27.625 30.625V18.9583H11.375V30.625M11.375 4.375V11.6667H24.375M30.875 30.625H8.125C7.26305 30.625 6.4364 30.3177 5.8269 29.7707C5.21741 29.2237 4.875 28.4819 4.875 27.7083V7.29167C4.875 6.51812 5.21741 5.77625 5.8269 5.22927C6.4364 4.68229 7.26305 4.375 8.125 4.375H26L34.125 11.6667V27.7083C34.125 28.4819 33.7826 29.2237 33.1731 29.7707C32.5636 30.3177 31.737 30.625 30.875 30.625Z" stroke="#9FAFC1" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
           </form>
           <% } else { %>
             <p>
@@ -79,36 +85,49 @@
   <!-- OTHER SECTIONS -->
 
   <!-- more about @username -->
-  <div class="about-container">
+  <div class="about-border">
     <div class="about-content">
-      <h1 class="about-text">more about @<%= user.username %></h1>
-      
+      <h1 class="about-text">more about @<%= user.username %>
+      </h1>
+
       <% if (isCurrentUser) { %>
         <!-- Editable for current user -->
         <form action="/profile" method="POST">
           <textarea class="about-textarea" name="aboutMe"><%= user.aboutMe || '' %></textarea>
-          <button type="submit">save</button>
+
+          <button type="submit" class="save-btn-style">
+            <svg xmlns="http://www.w3.org/2000/svg" width="39" height="35" viewBox="0 0 39 35" fill="none">
+              <rect x="0.25" y="0.25" width="35" height="35" />
+              <path d="M27.625 30.625V18.9583H11.375V30.625M11.375 4.375V11.6667H24.375M30.875 30.625H8.125C7.26305 30.625 6.4364 30.3177 5.8269 29.7707C5.21741 29.2237 4.875 28.4819 4.875 27.7083V7.29167C4.875 6.51812 5.21741 5.77625 5.8269 5.22927C6.4364 4.68229 7.26305 4.375 8.125 4.375H26L34.125 11.6667V27.7083C34.125 28.4819 33.7826 29.2237 33.1731 29.7707C32.5636 30.3177 31.737 30.625 30.875 30.625Z" stroke="#9FAFC1" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+
         </form>
-      <% } else { %>
-        <p class="about-text">
-          <%= user.aboutMe || "This user hasn't written an about me yet." %>
-        </p>
-      <% } %>
-  
+
+        <% } else { %>
+          <textarea class="about-textarea" name="aboutMe"><%= user.aboutMe || "This user hasn't written an about me yet." %></textarea>
+          <% } %>
+
     </div>
   </div>
-  
+
+
+
+
+
+
+  <!-- FUTURE FEATURE: MORE SECTIONS -->
 
   <!-- <div class="containers-wrapper"> -->
-    <!--socials -->
-    <!-- <div class="socials-container">
+  <!--socials -->
+  <!-- <div class="socials-container">
       <h1 class="socials-label">other socials</h1>
       <textarea class="socials-textarea" placeholder="add other socials here"></textarea>
       <button>save</button>
     </div> -->
 
-    <!-- artists -->
-    <!-- <div class="artists-container">
+  <!-- artists -->
+  <!-- <div class="artists-container">
       <h1 class="artists-label">other socials</h1>
       <textarea class="artists-textarea" placeholder="add your favorite artists here!"></textarea>
       <button>save</button>
@@ -116,12 +135,19 @@
 
   <!-- </div> -->
 
+
+
+
+
+
   <!-- Only allow new posts to be made if this is your profile -->
   <% if (isCurrentUser) { %>
-    <div class="newpost-border">
-      <div class="newpost-inner-border">
-        <div class="newpost-text-box">
-          <textarea name="note" id="note" placeholder="what's ur vibe?"></textarea>
+
+    <!-- post form -->
+    <form class="newpost" action="/posts" method="POST">
+      <div class="innerone">
+        <div class="innertwo">
+          <textarea class="newpost-textarea" name="note" id="note" placeholder="what's ur vibe?"></textarea>
         </div>
         <button class="sendbtn" type="submit">
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
@@ -136,10 +162,13 @@
               </clipPath>
             </defs>
           </svg>
+
         </button>
       </div>
-    </div>
+    </form>
     <% } %>
+
+
 
       <h3 class="title">
         <%= isCurrentUser ? "Your Posts" : user.username + "'s Posts" %>

@@ -1,5 +1,5 @@
 .title {
-    width: 228px;
+    width: 400px;
     height: 39px;
     flex-shrink: 0;
     color: #A16BBF;
@@ -87,13 +87,19 @@
     margin-left: 10px;
 }
 
+.bio-textarea {
+    border: none;
+}
+
+.save-btn-style {
+    border: none;
+    background: transparent;
+    padding-top: 5px;
+}
+
+
 /* about section */
-.about-container{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 8px;
-    height: 131px;
+.about-border{
     flex-shrink: 0;
     border-radius: 8px;
     border: 1.5px solid rgba(150, 120, 166, 0.80);
@@ -101,14 +107,17 @@
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
     margin-top: 40px;
     margin-bottom: 40px;
+    margin-left: 8px;
+    margin-right: 8px;
 }
 
 .about-content {
     display: flex;
+    flex-wrap: wrap;
     flex-direction: column;
-    align-items: flex-start;
+    height: 100%;
     width: 100%;
-    max-width: 400px;
+    padding: 10px;
 }
 
 .about-text {
@@ -118,20 +127,15 @@
     font-style: normal;
     font-weight: 400;
     line-height: normal;
-    margin-bottom: 5px;
-    padding-left: 12px;
+    margin-bottom: 10px;
+    margin-left: 10px;
 }
 
 .about-textarea {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-left: 20px;
-    padding: 8px;
-    height: 68px;
     border-radius: 5px;
-    border: 1px solid #1E1E1E;
-    background: #FFF;
+    width: 78%;
+    height: 100px;
+    margin-left: 10px;
 }
 
 /* second section */
@@ -181,12 +185,13 @@
 } */
 
 /* new post style */
-.newpost-border {
-    margin-top: 20px;
+.newpost {
+    margin-top: 25px;
+    margin: 10px;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 10px;
+    width: 390px;
     height: 131px;
     flex-shrink: 0;
     border-radius: 8px;
@@ -194,18 +199,18 @@
     background: #FFE6E9;
 }
 
-.newpost-inner-border {
+.innerone {
     display: flex;
     justify-content: center;
     align-items: center;
     width: 380px;
-    height: 119px;
+    height: 121px;
     flex-shrink: 0;
     border-radius: 5px;
     background: #FFF;
 }
 
-.newpost-text-box {
+.innertwo {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -216,14 +221,11 @@
     background: #F3DCFF;
 }
 
-textarea {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.newpost-textarea {
+    background-color: transparent;
     border: none;
     height: 75%;
     width: 85%;
-    background: transparent;
 }
 
 .sendbtn {
