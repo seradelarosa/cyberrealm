@@ -68,23 +68,3 @@ If your instructors determine that the project does not meet the minimum require
 Immediately after your presentation, your instructors may provide you with feedback that will benefit your project and perhaps the projects of other students. The feedback given at this time is not formal feedback and does not indicate whether you passed or failed the project.
 If there is a specific section of code that you would like an instructor to provide additional feedback on, please ask!
 
-/views
-│── index.ejs            # Homepage or main landing page
-│── /auth                # Authentication-related views
-│   ├── sign-in.ejs      # Sign-in page
-│   ├── sign-up.ejs      # Sign-up page
-│   ├── forgot-password.ejs  # (Optional) Password recovery
-│── /partials            # Reusable EJS components
-│   ├── header.ejs       # Site-wide navigation
-│   ├── footer.ejs       # Footer section
-│   ├── navbar.ejs       # (Optional) Separate navigation bar
-│── /bulletinboard          # main feed
-│   ├── bulletinboard.ejs    # Main user dashboard
-│   ├── bulletinboard.module.css      
-│── /profile             # users profile page
-│   ├── profilepage.ejs    # Main user profile page
-│   ├── profilepage.module.css     
-│── /posts               # Views related to blog posts
-│   ├── create-post.ejs  # Form for new posts
-│   ├── edit-post.ejs    # Edit existing post
-│   ├── post.ejs         # Single post view
