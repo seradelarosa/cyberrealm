@@ -38,7 +38,7 @@
 
   <!-- reply Form -->
   <h3>Add a Reply:</h3>
-  <form action="/post/<%= post._id %>/reply" method="POST">
+  <form action="/posts/<%= post._id %>/reply" method="POST">
     <textarea name="body" placeholder="Write your reply here..." required></textarea>
     <button type="submit">Reply</button>
   </form>
