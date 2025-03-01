@@ -12,28 +12,19 @@ const fileUpload = require('express-fileupload');
 const path = require('path');
 
 const User = require('./models/user'); // Make sure the path is correct
-const authController = require('./routes/auth.js');
+const authController = require('./controllers/auth.js');
+const profileController = require('./controllers/profile.js');
 const Post = require('./models/post.js');
 
 const port = process.env.PORT ? process.env.PORT : '3000';
 
-
-
 // =================================================================================================
 
-//debugging for heroku
-console.log("MONGODB_URI:", process.env.MONGODB_URI); 
+mongoose.connect(process.env.MONGODB_URI);
 
-mongoose.connect(process.env.MONGODB_URI)
-  .then(() => console.log(`Connected to MongoDB ${mongoose.connection.name}.`))
-  .catch(err => console.error('MongoDB connection error:', err));
-
-
-// mongoose.connect(process.env.MONGODB_URI);
-
-// mongoose.connection.on('connected', () => {
-//   console.log(`Connected to MongoDB ${mongoose.connection.name}.`);
-// });
+mongoose.connection.on('connected', () => {
+  console.log(`Connected to MongoDB ${mongoose.connection.name}.`);
+});
 
 // ==================================================================================================
 
@@ -70,6 +61,8 @@ app.get('/', (req, res) => {
 // authorize user
 app.use('/auth', authController);
 
+app.use('/profile', profileController);
+
 // allow viewing the bulletin board after the user is authorized
 app.get('/bulletinboard', async (req, res) => {
 
@@ -85,65 +78,6 @@ app.get('/bulletinboard', async (req, res) => {
     // Pass all posts to the view
     posts: posts,
   })
-});
-
-// redirect 
-app.get('/profile', (req, res) => {
-  res.redirect(`/profile/${req.session.user._id}`);
-});
-
-// update profile
-app.put('/profile', async (req, res) => {
-  try {
-    const updatedUser = await User.findByIdAndUpdate(
-      req.session.user._id,
-      { username: req.body.username },
-      { new: true }
-    );
-
-    // Update session user data
-    req.session.user.username = updatedUser.username;
-
-    res.redirect('/profile');
-  } catch (error) {
-    console.error(error);
-    res.status(500).send("Error updating profile!");
-  }
-});
-
-// edit comes before :userId so edit can be matched first
-app.get('/profile/edit', (req, res) => {
-  res.render('profile/editprofile.ejs', { user: req.session.user });
-});
-
-// Route for viewing a profile
-// runs a check to see if it's their own profile or someone else's
-app.get('/profile/:userId', async (req, res) => {
-
-  try {
-    const user = await User.findById(req.params.userId); // Find user by ID
-
-    if (!user) {
-      return res.status(404).render('errors/404', { message: "User not found" });
-    }
-
-    // fetch only posts made by this specific user
-    const userPosts = await Post.find({ author: user._id })
-      .sort({ createdAt: -1 });
-
-    res.render('profile/profile.ejs', {
-      // profile owner
-      user,
-      // check if viewing own profile
-      isCurrentUser: req.session.user._id.toString() === user._id.toString(),
-      // pass posts of this user
-      posts: userPosts,
-    });
-
-  } catch (error) {
-    console.error(error);
-    res.status(500).render('errors/500', { message: "Server error" });
-  }
 });
 
 // send a new post to posts
@@ -256,65 +190,6 @@ app.put('/posts/:id', async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).send("Error updating post!");
-  }
-});
-
-// post a profile image
-// THANK YOU INTERNET
-app.post('/profile/upload', async (req, res) => {
-  if (!req.files || !req.files.profileImage) {
-    return res.status(400).send('No file uploaded.');
-  }
-
-  const profileImage = req.files.profileImage;
-  const uploadPath = path.join(__dirname, 'uploads', profileImage.name); // Save to uploads folder
-
-  // Move the uploaded file to the 'uploads' folder
-  profileImage.mv(uploadPath, async (err) => {
-    if (err) {
-      return res.status(500).send(err);
-    }
-
-    // Update the user's profile image in the database
-    try {
-      const user = await User.findById(req.session.user._id);
-      user.profileImage = `/uploads/${profileImage.name}`; // Store the relative path in DB
-      await user.save();
-
-      // Update session to reflect the profile image change
-      req.session.user.profileImage = user.profileImage;
-
-      // Redirect to the user's profile page
-      res.redirect(`/profile/${user._id}`);
-    } catch (error) {
-      console.error(error);
-      res.status(500).send("Error updating profile image.");
-    }
-  });
-});
-
-// Route for updating the user's bio and aboutMe
-app.post('/profile', async (req, res) => {
-  const userId = req.session.user._id;
-  const { bio, aboutMe } = req.body; // Capture both bio and aboutMe
-
-  try {
-    // Update the user's bio and aboutMe in the database
-    const updatedUser = await User.findByIdAndUpdate(
-      userId,
-      { bio: bio, aboutMe: aboutMe }, // Update both fields
-      { new: true }
-    );
-
-    // Update session user data to reflect the changes
-    req.session.user.bio = updatedUser.bio;
-    req.session.user.aboutMe = updatedUser.aboutMe;
-
-    // Redirect to the updated profile page
-    res.redirect(`/profile/${updatedUser._id}`);
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("Error updating profile");
   }
 });
 
