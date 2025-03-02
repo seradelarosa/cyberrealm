@@ -59,31 +59,40 @@ router.get('/:userId', async (req, res) => {
 });
 
 // post a profile image
-// THANK YOU INTERNET
 router.post('/upload', async (req, res) => {
     if (!req.files || !req.files.profileImage) {
-        return res.status(400).send('No file uploaded.');
+        return res.send('No file uploaded.');
     }
 
+    // extract
     const profileImage = req.files.profileImage;
-    const uploadPath = path.join(__dirname, 'uploads', profileImage.name); // Save to uploads folder
 
-    // Move the uploaded file to the 'uploads' folder
-    profileImage.mv(uploadPath, async (err) => {
-        if (err) {
-            return res.status(500).send(err);
+    // Save to uploads folder
+    // Node.js path dirname https://nodejs.org/api/path.html#pathdirnamepath
+    // path.join handles different environments
+    // first set path where the image will be stored
+    const uploadPath = path.join(__dirname, '../public/uploads', profileImage.name); 
+
+    
+    // Move the uploaded file to the 'uploads' folder using `mv()` method
+    profileImage.mv(uploadPath, async (error) => {
+        if (error) {
+            return res.send(error);
         }
-
+        
         // Update the user's profile image in the database
         try {
+            //find user, update their profile image url in the DB
             const user = await User.findById(req.session.user._id);
-            user.profileImage = `/uploads/${profileImage.name}`; // Store the relative path in DB
+             // store the relative path in DB
+            user.profileImage = `/uploads/${profileImage.name}`;
             await user.save();
 
-            // Update session to reflect the profile image change
+            // update session to reflect the profile image change
             req.session.user.profileImage = user.profileImage;
 
-            // Redirect to the user's profile page
+            // redirect to the user's profile page
+            // could also redirect to referer i guess..
             res.redirect(`/profile/${user._id}`);
         } catch (error) {
             console.error(error);

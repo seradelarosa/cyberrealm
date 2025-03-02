@@ -1,63 +1,84 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="/styles/bulletinboard.module.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap" rel="stylesheet">
- 
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap" rel="stylesheet">
+
   <title>CyberRealm</title>
 </head>
+
 <body>
   <!-- <%= user.username %> -->
-<div class="header-container">
+  <div class="header-container">
     <h1 class="title">CyberRealm</h1>
-    <div class="profile"></div>
+
+    <div>
+    <div class="profile-picture">
+      <a href="/profile">
+        <img src="<%= user.profileImage || '' %>" alt="Profile Picture">
+      </a>
+    </div>
+    <p class="subtitle"> @<%= user.username %> </p>
+    
   </div>
-    <p>
-      <a href="/auth/sign-out">Sign out</a>
-      <a href="/profile">Profile Page</a>
-    </p>
-   
 
-<!-- post form -->
-<form class="newpost" action="/posts" method="POST">
-  <div class="innerone">
-    <div class="innertwo">
-    <textarea name="note" id="note" placeholder="what's ur vibe?"></textarea>
   </div>
-  <button class="sendbtn" type="submit">
-    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-      <g clip-path="url(#clip0_1_37)">
-        <path d="M18.3333 1.66666L9.16666 10.8333M18.3333 1.66666L12.5 18.3333L9.16666 10.8333M18.3333 1.66666L1.66666 7.49999L9.16666 10.8333" stroke="#8DC1DD" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-      </g>
-      <defs>
-        <clipPath id="clip0_1_37">
-          <rect width="20" height="20" fill="white"/>
-        </clipPath>
-      </defs>
-    </svg>
-
-  </button>
-  </div>
-</form>
 
 
-<!-- feed -->
-<div class="post-container">
-    <% posts.forEach(post => { %>
+  <p>
+    <a href="/auth/sign-out">Sign out</a>
+    <!-- <a href="/profile">Profile Page</a> -->
+  </p>
+
+
+  <!-- post form -->
+  <form class="newpost" action="/posts" method="POST">
+    <div class="innerone">
+      <div class="innertwo">
+        <textarea name="note" id="note" placeholder="what's ur vibe?"></textarea>
+      </div>
+      <button class="sendbtn" type="submit">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <g clip-path="url(#clip0_1_37)">
+            <path
+              d="M18.3333 1.66666L9.16666 10.8333M18.3333 1.66666L12.5 18.3333L9.16666 10.8333M18.3333 1.66666L1.66666 7.49999L9.16666 10.8333"
+              stroke="#8DC1DD" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          </g>
+          <defs>
+            <clipPath id="clip0_1_37">
+              <rect width="20" height="20" fill="white" />
+            </clipPath>
+          </defs>
+        </svg>
+
+      </button>
+    </div>
+  </form>
+
+
+  <!-- feed -->
+  <div class="post-container">
+    <% posts.forEach(post=> { %>
       <div class="post">
         <a href="/posts/<%= post._id %>">
-            <p><strong>@<%= post.author.username %>:</strong></p>
-              <p><%= post.body %></p>
-            <small><%= post.createdAt.toLocaleString() %></small>
-          </a>
+          <p><strong>@<%= post.author.username %>:</strong></p>
+          <p>
+            <%= post.body %>
+          </p>
+          <small>
+            <%= post.createdAt.toLocaleString() %>
+          </small>
+        </a>
       </div>
-    <% }) %>
+      <% }) %>
   </div>
 
 
 </body>
+
 </html>

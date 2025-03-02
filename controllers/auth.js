@@ -67,7 +67,9 @@ router.post('/sign-in', async (req, res) => {
     // If there is other data you want to save to `req.session.user`, do so here!
     req.session.user = {
       username: userInDatabase.username,
-      _id: userInDatabase._id
+      _id: userInDatabase._id,
+      // user's profile image loads with bulletin board so it can be displayed in the corner automatically
+      profileImage: userInDatabase.profileImage
     };
   
     //route, not filepath

@@ -39,7 +39,8 @@
       <!-- only show edit icon if you are the user -->
 
       <div>
-        <form action="/profile/upload" method="POST" enctype="multipart/form-data"></form>
+        <!-- stack overflow file upload with node/express https://stackoverflow.com/questions/23691194/node-express-file-upload -->
+        <form action="/profile/upload" method="POST" enctype="multipart/form-data">
         <label for="profileImage"></label>
         <input type="file" name="profileImage" id="profileImage" accept="image/*" required>
         <button type="submit">Upload</button>

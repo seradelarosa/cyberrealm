@@ -20,6 +20,54 @@
     background: #FFE6E9;
 }
 
+.profile-picture {
+    width: 100px;
+    height: 100px;
+    flex-shrink: 0;
+    border-radius: 7px;
+    background: lightgray;
+    /* Default color */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin-top: 50px;
+    margin-left: 10px;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.profile-picture input[type="file"] {
+    position: absolute;
+    /* Ensures input covers the whole div */
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    /* Makes it invisible but clickable */
+    cursor: pointer;
+}
+
+.profile-picture img {
+    width: 100%;
+    /* Ensure the image is responsive and fits the container */
+    height: 100%;
+    /* Ensure the image stretches to the container's height */
+    object-fit: contain;
+    /* This will scale the image to fit without cropping */
+}
+
+.subtitle {
+    font-family: "Roboto Mono", sans-serif;
+    font-weight: 200;
+    font-size: 16px;
+    color: #575757;
+    margin-left: 15px;
+    padding-left: 10px;
+    margin: 0px;
+}
+
 .header-container {
     display: flex;
     justify-content: space-between;
