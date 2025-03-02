@@ -1,22 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/styles/edit.module.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap" rel="stylesheet">
+
   <title>Edit Post</title>
 </head>
+
 <body>
 
-  <h1>Edit Your Post</h1>
+  <!-- back button -->
+  <a href="/posts/<%= post._id %>">
+    <svg xmlns="http://www.w3.org/2000/svg" width="33" height="34" viewBox="0 0 33 34" fill="none">
+      <rect width="33" height="34" />
+      <path d="M26.125 17H6.875M6.875 17L16.5 26.9167M6.875 17L16.5 7.08333" stroke="#265274" stroke-width="4"
+        stroke-linecap="round" stroke-linejoin="round" />
+    </svg>
+  </a>
 
-  <form action="/posts/<%= post._id %>?_method=PUT" method="POST">
-    <textarea name="body" required><%= post.body %></textarea>
-    <br>
-    <button type="submit">Update Post</button>
+  <h1 class="title">edit your post</h1>
+
+  <form class="editpost" action="/posts/<%= post._id %>?_method=PUT" method="POST">
+    <div class="innerone">
+      <div class="innertwo">
+        <textarea name="body" required><%= post.body %></textarea>
+      </div>
+    </div>
+
+    <div class="button-container">
+      <button type="submit" class="button">update</button>
+    </div>
   </form>
-
-  <br>
-  <a href="/posts/<%= post._id %>">Cancel</a>
 
 </body>
 </html>
